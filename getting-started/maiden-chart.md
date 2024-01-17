@@ -52,29 +52,36 @@ Think of the chart as a blank graph with labelled axes. We can plot data from va
 is an object that allows the specification of custom values for various options provides by chartjs
 
 ```javascript
-function randArr(min, max, size){
+function buildArr(size, getItem){
   const rtnArr = [];
-  for(let i = 0; i < size; i++) 
-    rtnArr.push(Math.floor(Math.random() * (max - min) + min));
+  for(let i = 0; i < size; i++){
+    rtnArr.push(getItem(i, rtnArr));
+  }
   return rtnArr;
 }
 
+function randArr(size, min, max){
+  return buildArr(size, () => Math.floor(Math.random() * (max - min) + min))
+}
 
-const ctx = document.getElementById("myChart");
-
-new Chart(ctx, {
+new Chart(document.getElementById("myChart"), {
   type: "bar",
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: [
+      "January", "February", "March", 
+      "April", "May", "June", 
+      "July", "August", "September", 
+      "October", "November", "December"
+    ],
     datasets: [
       {
-        label: "# of votes",
-        data: randArr(10, 20, 6),
+        label: "customers",
+        data: randArr(12, 10, 1000),
         borderWidth: 1
       },
       {
-        label: "# of votes",
-        data: randArr(0, 10, 6),
+        label: "subscribers",
+        data: randArr(12, 10, 1000),
         borderWidth: 1
       },      
     ]
@@ -87,7 +94,7 @@ new Chart(ctx, {
 })
 ```
 
+![[Pasted image 20240117203148.png]]
 
-
-![[Pasted image 20240117132816.png]]
-
+read later
+- [jsdeliver](https://www.jsdelivr.com) a cdn for packages on the npm registry 
